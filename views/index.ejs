@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Analyzer</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>GitHub Profile Analyzer</h1>
+
+    <form action="/analyze" method="POST" class="search-form">
+        <input
+            type="text"
+            name="username"
+            placeholder="Enter GitHub Username"
+            required
+        >
+        <button type="submit">Analyze</button>
+    </form>
+ <% if (profile) { %>
+        <div class="profile-card">
+
+            <img
+                src="<%= profile.avatar_url %>"
+                alt="avatar"
+                class="avatar"
+            >
+
+            <h2><%= profile.name || profile.login %></h2>
+            <p>@<%= profile.login %></p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <h3><%= profile.followers %></h3>
+                    <span>Followers</span>
+                </div>
+
+                <div class="stat">
+                    <h3><%= profile.following %></h3>
+                    <span>Following</span>
+                </div>
+
+                <div class="stat">
+                    <h3><%= profile.public_repos %></h3>
+                    <span>Repositories</span>
+                </div>
+
+            </div>
+
+            <% if (profile.totalStars) { %>
+                <p><strong>Total Stars:</strong> <%= profile.totalStars %></p>
+            <% } %>
+
+            <% if (profile.topLanguage) { %>
+                <p><strong>Top Language:</strong> <%= profile.topLanguage %></p>
+            <% } %>
+
+        </div>
+    <% } %>
+
+    <% if (profiles && profiles.length > 0) { %>
+
+        <div class="history">
+
+            <h2>Stored Profiles</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Followers</th>
+                        <th>Repos</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                <% profiles.forEach(user => { %>
+
+                    <tr>
+                        <td><%= user.username %></td>
+                        <td><%= user.followers %></td>
+                        <td><%= user.public_repos %></td>
+                    </tr>
+
+                <% }) %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    <% } %>
+
+</div>  
+
+    </body>
+</html>
